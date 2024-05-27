@@ -7,6 +7,8 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer_data:/data
+    networks:
+      - portainer_agent_network
     deploy:
       mode: replicated
       replicas: 1
@@ -38,6 +40,10 @@ services:
         delay: 5s
         max_attempts: 3
         window: 120s
+
+networks:
+  portainer_agent_network:
+    driver: overlay
 
 volumes:
   portainer_data:
