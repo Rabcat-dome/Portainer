@@ -36,7 +36,6 @@ services:
       placement:
         constraints:
           - node.platform.os == linux
-          - node.role != manager
       restart_policy:
         condition: any
         delay: 5s
