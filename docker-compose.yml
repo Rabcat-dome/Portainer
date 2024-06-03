@@ -6,9 +6,9 @@ services:
       - "8000:8000"  # พอร์ตสำหรับ Edge Agent (ถ้าจำเป็น)
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - portainer_data:/data
+      - portainer-data:/data
     networks:
-      - portainer_agent_network
+      - portainer-agent-network
     deploy:
       mode: replicated
       replicas: 1
@@ -30,7 +30,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - /var/lib/docker/volumes:/var/lib/docker/volumes
     networks:
-      - portainer_agent_network
+      - portainer-agent-network
     deploy:
       mode: global
       placement:
@@ -43,8 +43,13 @@ services:
         window: 120s
 
 networks:
-  portainer_agent_network:
+  portainer-agent-network:
     driver: overlay
 
 volumes:
-  portainer_data:
+  portainer-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /media/psf/NFS/portainer-data
