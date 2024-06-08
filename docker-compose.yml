@@ -2,8 +2,8 @@ services:
   portainer:
     image: portainer/portainer-ce
     ports:
-      - "9000:9000"  # พอร์ตสำหรับเข้าถึง GUI
-      - "8000:8000"  # พอร์ตสำหรับ Edge Agent (ถ้าจำเป็น)
+      - "19001:9000"  # พอร์ตสำหรับเข้าถึง GUI
+      # - "8000:8000"  # พอร์ตสำหรับ Edge Agent (ถ้าจำเป็น)
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer-data:/data
