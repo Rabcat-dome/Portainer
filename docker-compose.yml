@@ -9,47 +9,15 @@ services:
       - portainer-data:/data
     networks:
       - portainer-agent-network
-    deploy:
-      mode: replicated
-      replicas: 1
-      placement:
-        constraints:
-          - node.role == manager
-      restart_policy:
-        condition: any
-        delay: 5s
-        max_attempts: 3
-        window: 120s
-  agent:
-    image: portainer/agent
-    environment:
-      AGENT_CLUSTER_ADDR: tasks.agent
-    ports:
-      - "9001:9001"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /var/lib/docker/volumes:/var/lib/docker/volumes
-    networks:
-      - portainer-agent-network
-    deploy:
-      mode: global
-      placement:
-        constraints:
-          - node.platform.os == linux
-      restart_policy:
-        condition: any
-        delay: 5s
-        max_attempts: 3
-        window: 120s
+    restart: always
 
 networks:
   portainer-agent-network:
-    driver: overlay
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.84.0/24
 
 volumes:
   portainer-data:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /media/psf/NFS/portainer-data
