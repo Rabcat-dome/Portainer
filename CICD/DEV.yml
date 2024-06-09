@@ -1,0 +1,23 @@
+services:
+  portainer:
+    image: portainer/portainer-ce
+    ports:
+      - "19001:9000"  # พอร์ตสำหรับเข้าถึง GUI
+      # - "8000:8000"  # พอร์ตสำหรับ Edge Agent (ถ้าจำเป็น)
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer-data:/data
+    networks:
+      - portainer-agent-network
+    restart: always
+
+networks:
+  portainer-agent-network:
+    driver: bridge
+    # ipam:
+    #   driver: default
+    #   config:
+    #     - subnet: 192.168.84.0/24
+
+volumes:
+  portainer-data:
